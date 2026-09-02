@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #051139;
+  --gold: #e8a317;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800 antialiased;
+}
+
+.hex-grid {
+  background-image: radial-gradient(rgba(5, 17, 57, 0.06) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.terminal-credit {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}

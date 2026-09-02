@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "Nanotexnologiyalarni rivojlantirish markazi | O‘zMU",
+    "description": "Mirzo Ulug‘bek nomidagi O‘zbekiston Milliy universiteti qoshidagi Nanotexnologiyalarni rivojlantirish markazining rasmiy veb-sayti."
+  },
+  "brand": {
+    "name": "O‘ZMU QOSHIDAGI NANOTEXNOLOGIYALARNI RIVOJLANTIRISH MARKAZI",
+    "short": "NANO MARKAZ",
+    "subtitle": "Ilmiy-tadqiqot va innovatsion markaz"
+  },
+  "nav": {
+    "home": "Bosh sahifa",
+    "directions": "Yo‘nalishlar",
+    "admin": "Admin Panel"
+  },
+  "header": {
+    "address": "Bosh bino manzili: 100174, Toshkent shahar, Olmazor tumani, Universitet ko‘chasi, 4-uy",
+    "phone": "+998 71 246 54 17"
+  },
+  "hero": {
+    "infoTitle": "Markaz axborot tizimi",
+    "infoBody": "Ilmiy yangiliklar, laboratoriyalar va hujjatlar yagona portalda. So‘nggi ma’lumotlarni kuzatib boring.",
+    "latest": "So‘nggi ma’lumotlar",
+    "viewAll": "Barcha bo‘limlarga o‘tish",
+    "readMore": "Batafsil"
+  },
+  "categories": {
+    "title": "Markazning yo‘nalishlar va hujjatlar ombori",
+    "subtitle": "Batafsil ma’lumotlarni ko‘rish va filtrlash uchun kategoriyani tanlang.",
+    "staff": {
+      "title": "Markaz xodimlari",
+      "desc": "Professorlar, tadqiqotchilar va yosh olimlar jamoasi."
+    },
+    "labs": {
+      "title": "Laboratoriya va jihozlar",
+      "desc": "Spektrometrlar, mikroskopiya va o‘lchov tizimlari."
+    },
+    "articles": {
+      "title": "Ilmiy maqolalar",
+      "desc": "Scopus va Web of Science indekslaridagi nashrlar."
+    },
+    "docs": {
+      "title": "Nizom va hujjatlar",
+      "desc": "Nizom, hisobotlar va ichki tartib hujjatlari."
+    }
+  },
+  "labs": {
+    "title": "Laboratoriyalar",
+    "subtitle": "To‘rtta ixtisoslashgan ilmiy laboratoriya",
+    "head": "Laboratoriya rahbari"
+  },
+  "about": {
+    "title": "Markaz haqida",
+    "body": "Nanotexnologiyalarni rivojlantirish markazi fizik va kimyoviy nanostrukturalar bo‘yicha respublikadagi yetakchi ilmiy-tadqiqot maydonlaridan biridir. Markaz fundamental va amaliy tadqiqotlar, xorijiy ilmiy muassasalar bilan hamkorlik, mutaxassislar malakasini oshirish va xalqaro konferensiyalarni tashkil etish bilan shug‘ullanadi."
+  },
+  "footer": {
+    "about": "Markaz haqida",
+    "quick": "Tezkor ma’lumotlar",
+    "contact": "Aloqa kanallari",
+    "office": "Ofis",
+    "fax": "Faks",
+    "mail": "Pochta",
+    "copyright": "© 2026 Nanotexnologiyalarni rivojlantirish markazi. Barcha huquqlar himoyalangan.",
+    "developer": "Developer: Nurbek Toshboyev",
+    "phones": ["+998 71 246 54 17", "+998 71 246 02 24"],
+    "email": "nano-center@nuu.uz",
+    "address": "100174, Toshkent, Olmazor tumani, Universitet ko‘chasi, 4-uy"
+  },
+  "news": {
+    "empty": "Hozircha yangiliklar yo‘q.",
+    "back": "Orqaga"
+  },
+  "directionsPage": {
+    "title": "Ilmiy yo‘nalishlar",
+    "intro": "Markaz nanotexnologiya, kvant fotonikasi, funksional nanomateriallar va termoelektrika yo‘nalishlarida tadqiqot olib boradi."
+  }
+}

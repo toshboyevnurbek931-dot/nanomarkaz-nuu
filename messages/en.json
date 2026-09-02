@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "Center for the Development of Nanotechnologies | NUU",
+    "description": "Official website of the Center for the Development of Nanotechnologies at the National University of Uzbekistan named after Mirzo Ulugbek."
+  },
+  "brand": {
+    "name": "CENTER FOR THE DEVELOPMENT OF NANOTECHNOLOGIES AT NUU",
+    "short": "NANO CENTER",
+    "subtitle": "Research and innovation center"
+  },
+  "nav": {
+    "home": "Home",
+    "directions": "Directions",
+    "admin": "Admin Panel"
+  },
+  "header": {
+    "address": "Main building: 100174, Tashkent, Olmazor district, University street, 4",
+    "phone": "+998 71 246 54 17"
+  },
+  "hero": {
+    "infoTitle": "Center information system",
+    "infoBody": "Scientific news, laboratories and documents in one portal. Follow the latest updates.",
+    "latest": "Latest information",
+    "viewAll": "Go to all sections",
+    "readMore": "Read more"
+  },
+  "categories": {
+    "title": "Center directions and document repository",
+    "subtitle": "Select a category to view and filter detailed information.",
+    "staff": {
+      "title": "Center staff",
+      "desc": "A team of professors, researchers and early-career scientists."
+    },
+    "labs": {
+      "title": "Laboratories & equipment",
+      "desc": "Spectrometers, microscopy and measurement systems."
+    },
+    "articles": {
+      "title": "Scientific articles",
+      "desc": "Publications indexed in Scopus and Web of Science."
+    },
+    "docs": {
+      "title": "Regulations & documents",
+      "desc": "Charter, reports and internal regulatory documents."
+    }
+  },
+  "labs": {
+    "title": "Laboratories",
+    "subtitle": "Four specialized research laboratories",
+    "head": "Laboratory head"
+  },
+  "about": {
+    "title": "About the center",
+    "body": "The Center for the Development of Nanotechnologies is one of the leading research sites in the country for physical and chemical nanostructures. It conducts fundamental and applied research, cooperates with foreign institutions, trains specialists and organizes international conferences."
+  },
+  "footer": {
+    "about": "About the center",
+    "quick": "Quick facts",
+    "contact": "Contact channels",
+    "office": "Office",
+    "fax": "Fax",
+    "mail": "Mail",
+    "copyright": "© 2026 Center for the Development of Nanotechnologies. All rights reserved.",
+    "developer": "Developer: Nurbek Toshboyev",
+    "phones": ["+998 71 246 54 17", "+998 71 246 02 24"],
+    "email": "nano-center@nuu.uz",
+    "address": "100174, Tashkent, Olmazor district, University st., 4"
+  },
+  "news": {
+    "empty": "No news yet.",
+    "back": "Back"
+  },
+  "directionsPage": {
+    "title": "Research directions",
+    "intro": "The center conducts research in nanotechnology, quantum photonics, functional nanomaterials and thermoelectrics."
+  }
+}
