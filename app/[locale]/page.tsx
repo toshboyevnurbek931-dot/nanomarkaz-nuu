@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { HeroSlider } from "@/components/HeroSlider";
