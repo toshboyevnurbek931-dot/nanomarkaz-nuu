@@ -8,33 +8,31 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, content, imageUrl, lang, labSlug } = body;
+    const { title, content, imageUrl, lang, language, labSlug, date } = body;
 
-    const db = prisma as any;
-    const targetModel = db.newsArticle || db.news || db.labPost;
-
-    if (!targetModel) {
+    if (!title || !content) {
       return NextResponse.json(
-        { error: "Baza modeli topilmadi" },
-        { status: 500 }
+        { error: "Sarlavha va matn bo'sh bo'lmasligi kerak" },
+        { status: 400 }
       );
     }
 
-    const article = await targetModel.create({
+    const article = await prisma.news.create({
       data: {
-        title,
-        content,
-        imageUrl: imageUrl || null,
-        lang: lang || "uz",
-        labSlug: labSlug || null,
+        title: title.trim(),
+        content: content.trim(),
+        language: language || lang || "uz",
+        imageUrl: imageUrl && imageUrl.trim() !== "" ? imageUrl.trim() : null,
+        labSlug: labSlug && labSlug.trim() !== "" ? labSlug.trim() : null,
+        ...(date ? { date: new Date(date) } : {}),
       },
     });
 
     return NextResponse.json(article, { status: 201 });
-  } catch (error) {
-    console.error("API Error:", error);
+  } catch (error: any) {
+    console.error("API POST Error:", error);
     return NextResponse.json(
-      { error: "Saqlashda xatolik yuz berdi" },
+      { error: error?.message || "Bazada saqlashda xatolik yuz berdi" },
       { status: 500 }
     );
   }
