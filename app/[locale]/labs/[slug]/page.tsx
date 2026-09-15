@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { PrismaClient } from "@prisma/client";
+import LabPostList from "@/components/LabPostList";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 const prisma = globalForPrisma.prisma || new PrismaClient();
@@ -16,14 +17,22 @@ export default async function LabDetailPage({
 
   try {
     const db = prisma as any;
-    const targetModel = db.newsArticle || db.news || db.labPost;
+    
+    // News hamda LabPost jadvallaridan postlarni olish
+    const newsPosts = await db.news?.findMany({
+      where: { labSlug },
+      orderBy: { createdAt: "desc" },
+    }).catch(() => []);
 
-    if (targetModel) {
-      posts = await targetModel.findMany({
-        where: { labSlug },
-        orderBy: { createdAt: "desc" },
-      });
-    }
+    const labPosts = await db.labPost?.findMany({
+      where: { labSlug },
+      orderBy: { createdAt: "desc" },
+    }).catch(() => []);
+
+    const combined = [...(newsPosts || []), ...(labPosts || [])];
+    posts = combined.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
   } catch (error) {
     console.error("Baza bilan bog'lanishda xatolik:", error);
   }
@@ -34,38 +43,7 @@ export default async function LabDetailPage({
         Laboratoriya Ilmiy Yangiliklari va Postlari
       </h1>
 
-      {posts.length === 0 ? (
-        <div className="p-8 text-center bg-gray-50 rounded-xl border">
-          <p className="text-gray-500 font-medium">
-            Ushbu laboratoriya uchun hozircha hech qanday post kiritilmagan.
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {posts.map((post) => (
-            <div
-              key={post.id}
-              className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition"
-            >
-              {post.imageUrl && (
-                <img
-                  src={post.imageUrl}
-                  alt={post.title || "Laboratoriya rasmi"}
-                  className="w-full h-56 object-cover"
-                />
-              )}
-              <div className="p-5">
-                <h2 className="text-xl font-bold text-gray-900 mb-2">
-                  {post.title}
-                </h2>
-                <p className="text-gray-600 whitespace-pre-line">
-                  {post.content}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      <LabPostList posts={posts} />
     </div>
   );
 }
