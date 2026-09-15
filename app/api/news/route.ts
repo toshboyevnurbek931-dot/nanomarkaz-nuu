@@ -1,45 +1,41 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { requireAdmin } from "@/lib/utils";
+import { PrismaClient } from "@prisma/client";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const language = searchParams.get("language");
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+const prisma = globalForPrisma.prisma || new PrismaClient();
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
-  const news = await prisma.news.findMany({
-    where: language ? { language } : undefined,
-    orderBy: { date: "desc" },
-  });
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { title, content, imageUrl, lang, labSlug } = body;
 
-  return NextResponse.json(news);
-}
+    const db = prisma as any;
+    const targetModel = db.newsArticle || db.news || db.labPost;
 
-export async function POST(request: Request) {
-  const unauthorized = await requireAdmin();
-  if (unauthorized) return unauthorized;
+    if (!targetModel) {
+      return NextResponse.json(
+        { error: "Baza modeli topilmadi" },
+        { status: 500 }
+      );
+    }
 
-  const body = await request.json();
-  const { title, content, imageUrl, date, language } = body as {
-    title?: string;
-    content?: string;
-    imageUrl?: string | null;
-    date?: string;
-    language?: string;
-  };
+    const article = await targetModel.create({
+      data: {
+        title,
+        content,
+        imageUrl: imageUrl || null,
+        lang: lang || "uz",
+        labSlug: labSlug || null,
+      },
+    });
 
-  if (!title?.trim() || !content?.trim() || !language) {
-    return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    return NextResponse.json(article, { status: 201 });
+  } catch (error) {
+    console.error("API Error:", error);
+    return NextResponse.json(
+      { error: "Saqlashda xatolik yuz berdi" },
+      { status: 500 }
+    );
   }
-
-  const item = await prisma.news.create({
-    data: {
-      title: title.trim(),
-      content: content.trim(),
-      imageUrl: imageUrl || null,
-      language,
-      date: date ? new Date(date) : new Date(),
-    },
-  });
-
-  return NextResponse.json(item, { status: 201 });
 }

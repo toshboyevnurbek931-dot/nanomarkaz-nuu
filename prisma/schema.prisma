@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model News {
@@ -21,6 +22,7 @@ model News {
 model Lab {
   id             String   @id @default(cuid())
   slug           String   @unique
+  imageUrl       String?  // Laboratoriya rasmi havolasi
   nameUz         String
   nameRu         String
   nameEn         String
@@ -32,4 +34,16 @@ model Lab {
   descriptionEn  String   @default("")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+}
+model LabPost {
+  id        String   @id @default(cuid())
+  labSlug   String   // Tanlangan laboratoriya (masalan: kvant-fotonikasi)
+  titleUz   String
+  titleRu   String?
+  titleEn   String?
+  imageUrl  String?
+  contentUz String
+  contentRu String?
+  contentEn String?
+  createdAt DateTime @default(now())
 }
