@@ -18,7 +18,7 @@ export default function Logo() {
       <div className="hidden sm:block">
         <p className="text-sm md:text-base font-bold text-white leading-tight">
           O‘ZMU
-          
+
         </p>
         <p className="text-xs md:text-sm font-semibold text-blue-100 leading-tight">
           NANOTEXNOLOGIYALARNI RIVOJLANTIRISH MARKAZI
@@ -26,4 +26,7 @@ export default function Logo() {
       </div>
     </Link>
   );
+  export function Logo() {
+  // ...
+}
 }
