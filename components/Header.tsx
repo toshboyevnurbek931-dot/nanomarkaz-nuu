@@ -6,21 +6,26 @@ import { Menu, X, User } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
-import { useSession } from "next-auth/react"; // next-auth ishlatilayotgan bo‘lsa
+import { useSession } from "next-auth/react";
 
 export function Header() {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
-  const { data: session, status } = useSession();
 
-  // Admin ekanligini tekshirish
+  // Build vaqtida xato bermasligi uchun xavfsiz olingan
+  const sessionResult = useSession();
+  const session = sessionResult?.data ?? null;
+  const status = sessionResult?.status ?? "unauthenticated";
+
   const isAdmin =
     status === "authenticated" &&
-    (session?.user?.role === "ADMIN" || session?.user?.email === "admin@nanomarkaz.uz"); // o‘zingizning admin email/role ni yozing
+    (session?.user?.role === "ADMIN" ||
+      session?.user?.email === "admin@nanomarkaz.uz" ||
+      session?.user?.name === "NurbekDev");
 
   return (
     <header className="sticky top-0 z-50">
-      {/* Yuqori qism - manzil va telefon */}
+      {/* Yuqori qism */}
       <div className="bg-navy-950 text-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2 text-xs sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <p className="truncate opacity-90">{t("header.address")}</p>
@@ -36,7 +41,6 @@ export function Header() {
       {/* Asosiy navigatsiya */}
       <div className="bg-navy-900 text-white shadow-lg">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-          {/* Logo + nom */}
           <Link href="/" className="flex min-w-0 items-center gap-3">
             <Logo />
             <span className="min-w-0">
@@ -102,7 +106,6 @@ export function Header() {
               {t("nav.directions")}
             </Link>
 
-            {/* Faqat admin uchun mobile */}
             {isAdmin && (
               <Link
                 href="/admin"
