@@ -1,32 +1,17 @@
-// components/Logo.tsx
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
-export default function Logo() {
+export function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2 group">
-      <div className="relative w-12 h-12 md:w-14 md:h-14 shrink-0">
-        <Image
-          src="/logo.png" // yoki Supabase public URL
-          alt="Nanotexnologiyalarni rivojlantirish markazi"
-          fill
-          className="object-contain drop-shadow-md group-hover:scale-105 transition-transform"
-          priority
-          sizes="(max-width: 768px) 48px, 56px"
-        />
-      </div>
-      <div className="hidden sm:block">
-        <p className="text-sm md:text-base font-bold text-white leading-tight">
-          O‘ZMU
-
-        </p>
-        <p className="text-xs md:text-sm font-semibold text-blue-100 leading-tight">
-          NANOTEXNOLOGIYALARNI RIVOJLANTIRISH MARKAZI
-        </p>
-      </div>
-    </Link>
+    <div className="relative h-10 w-10 shrink-0 sm:h-12 sm:w-12">
+      <Image
+        src="/logo.png"          // logo rasmi public/logo.png da bo‘lishi kerak
+        alt="Nanotexnologiyalarni rivojlantirish markazi"
+        fill
+        className="object-contain drop-shadow-md"
+        priority
+        sizes="(max-width: 640px) 40px, 48px"
+      />
+    </div>
   );
-  export function Logo() {
-  // ...
-}
 }
