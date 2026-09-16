@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")   // ← bu qator muhim!
 }
 
 model News {
@@ -17,6 +18,10 @@ model News {
   language  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([labSlug])
+  @@index([language])
+  @@index([date])
 }
 
 model Lab {
@@ -34,6 +39,8 @@ model Lab {
   descriptionEn String   @default("")
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  @@index([slug])
 }
 
 model LabPost {
@@ -43,8 +50,13 @@ model LabPost {
   titleRu   String?
   titleEn   String?
   imageUrl  String?
+  videoUrl  String?          // video qo‘llab-quvvatlash uchun
   contentUz String
   contentRu String?
   contentEn String?
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([labSlug])
+  @@index([createdAt])
 }
