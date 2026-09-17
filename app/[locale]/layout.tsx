@@ -6,6 +6,7 @@ import { Manrope } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { AuthProvider } from "@/components/admin/AuthProvider";
 
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
@@ -35,11 +36,13 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={manrope.variable}>
       <body className="min-h-screen font-sans">
-        <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
+        <AuthProvider>
+          <NextIntlClientProvider messages={messages}>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </NextIntlClientProvider>
+        </AuthProvider>
       </body>
     </html>
   );
