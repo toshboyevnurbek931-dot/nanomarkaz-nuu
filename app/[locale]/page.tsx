@@ -31,7 +31,7 @@ export default async function HomePage({
           {/* Chap tomon: Barcha yangiliklar to'ri (3 ustun) */}
           <div className="lg:col-span-3">
             <h2 className="mb-4 text-xl font-bold text-navy-950 uppercase tracking-wide">
-              {t("nav.news") || "YANGILIKLAR VA VOQEALAR"}
+              {t("YANGILIKLAR VA VOQEALAR") || "YANGILIKLAR VA VOQEALAR"}
             </h2>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {news.map((item) => (
