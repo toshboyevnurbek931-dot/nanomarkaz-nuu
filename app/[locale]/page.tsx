@@ -124,7 +124,7 @@ export default async function HomePage({
         <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 sm:p-8 flex flex-col md:flex-row gap-8 items-center md:items-start">
           <div className="relative w-48 h-60 sm:w-56 sm:h-72 shrink-0 rounded-xl overflow-hidden border-2 border-slate-200 bg-slate-100 shadow-sm">
             <Image
-              src="https://i.postimg.cc/zG3j4DTC/photo-2026-09-17-14-08-37.jpg"
+              src="https://i.postimg.cc/y6m4KnvP/HD-Uzbek-News-Broadcast-with-Elderly-Speaker.png"
               alt="Akademik Komil Muqimovich Muqimov"
               fill
               className="object-cover object-top"
