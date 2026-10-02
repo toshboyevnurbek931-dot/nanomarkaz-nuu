@@ -5,6 +5,7 @@ import { CategoryGrid } from "@/components/CategoryGrid";
 import { LabsSection } from "@/components/LabsSection";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export default async function HomePage({
   params,
@@ -23,14 +24,14 @@ export default async function HomePage({
   ]);
 
   return (
-    <div className="min-h-screen bg-slate-50/50">
-      {/* 1. Ekran kengligini to'liq (95%) egallovchi Yangiliklar to'ri */}
-      <section className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6 py-6">
+    <div className="min-h-screen bg-slate-50/50 space-y-12 pb-16">
+      {/* 1. YANGILIKLAR BO'LIMI */}
+      <section id="news" className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6 pt-6 scroll-mt-24">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
           
           {/* Chap tomon: Barcha yangiliklar to'ri (3 ustun) */}
           <div className="lg:col-span-3">
-            <h2 className="mb-4 text-xl font-bold text-navy-950 uppercase tracking-wide">
+            <h2 className="mb-4 text-xl font-bold text-navy-950 uppercase tracking-wide border-l-4 border-orange-500 pl-3">
               {t("YANGILIKLAR VA VOQEALAR") || "YANGILIKLAR VA VOQEALAR"}
             </h2>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -73,7 +74,7 @@ export default async function HomePage({
             </div>
           </div>
 
-          {/* O'ng tomon: Sidebar (Foydali manbalar va Oxirgi xabarlar) */}
+          {/* O'ng tomon: Sidebar */}
           <div className="space-y-6 lg:col-span-1">
             <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
               <h3 className="border-b border-slate-100 pb-2 text-sm font-bold text-navy-950">
@@ -108,14 +109,159 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 2. Kategoriya va Laboratoriyalar qismi */}
+      {/* 2. KATEGORIYA VA LABORATORIYALAR BO'LIMI */}
       <div className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6">
         <CategoryGrid />
         <LabsSection labs={labs} locale={params.locale} />
       </div>
 
-      {/* 3. Biz haqimizda bo'limi */}
-      <section className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6 pb-12">
+      {/* 3. RAHBARIYAT BO'LIMI (id="leadership") */}
+      <section id="leadership" className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6 scroll-mt-24">
+        <h2 className="mb-6 text-xl font-bold text-navy-950 uppercase tracking-wide border-l-4 border-orange-500 pl-3">
+          Markaz Rahbariyati
+        </h2>
+        
+        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 sm:p-8 flex flex-col md:flex-row gap-8 items-center md:items-start">
+          <div className="relative w-48 h-60 sm:w-56 sm:h-72 shrink-0 rounded-xl overflow-hidden border-2 border-slate-200 bg-slate-100 shadow-sm">
+            <Image
+              src="https://i.postimg.cc/zG3j4DTC/photo-2026-09-17-14-08-37.jpg"
+              alt="Akademik Komil Muqimovich Muqimov"
+              fill
+              className="object-cover object-top"
+            />
+          </div>
+          
+          <div className="space-y-4 text-slate-800 flex-1">
+            <div>
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-orange-50 text-orange-600 mb-2">
+                Markaz Rahbari
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black text-navy-950">
+                Komil Muqimovich Muqimov
+              </h3>
+              <p className="text-xs sm:text-sm font-semibold text-slate-600 mt-1">
+                Fizika-matematika fanlari doktori, professor, O'zbekiston Fanlar akademiyasi akademigi
+              </p>
+            </div>
+
+            <div className="border-t border-slate-100 pt-4 space-y-2 text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <p>
+                <strong>Faoliyati:</strong> O'zbekiston Milliy universiteti qoshidagi Nanotexnologiyalarni rivojlantirish markazi rahbari. Magnetizm, optika, magnetooptika hamda nanomateriallar va spintronika sohalarida yirik ilmiy maktab yaratgan yetakchi olim.
+              </p>
+              <p>
+                <strong>Mukofotlari:</strong> "Do'stlik" ordeni (2024-yil) va "Mehnat Faxriysi" ko'krak nishoni (2023-yil) sohibi.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. XODIMLAR BO'LIMI (id="staff") */}
+      <section id="staff" className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6 scroll-mt-24">
+        <h2 className="mb-6 text-xl font-bold text-navy-950 uppercase tracking-wide border-l-4 border-orange-500 pl-3">
+          Yetakchi Xodimlar va Olimlar
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-navy-950 text-white font-bold text-lg flex items-center justify-center shrink-0">
+                O.O.
+              </div>
+              <div>
+                <h4 className="font-bold text-navy-950 text-base">Ochilov Odil</h4>
+                <p className="text-xs font-semibold text-orange-600">Kvant fotonikasi laboratoriyasi mudiri</p>
+                <p className="text-xs text-slate-500 mt-0.5">Fizika-matematika fanlari nomzodi</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-navy-950 text-white font-bold text-lg flex items-center justify-center shrink-0">
+                N.T.
+              </div>
+              <div>
+                <h4 className="font-bold text-navy-950 text-base">Ilmiy-tadqiqot guruhi</h4>
+                <p className="text-xs font-semibold text-orange-600">Katta va kichik ilmiy xodimlar</p>
+                <p className="text-xs text-slate-500 mt-0.5">Nanomateriallar va optika mutaxassislari</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. ALOQA BO'LIMI (id="contact") */}
+      <section id="contact" className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6 scroll-mt-24">
+        <h2 className="mb-6 text-xl font-bold text-navy-950 uppercase tracking-wide border-l-4 border-orange-500 pl-3">
+          Aloqa Ma'lumotlari
+        </h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-start gap-4">
+              <div className="p-3 rounded-lg bg-slate-100 text-navy-950 shrink-0">
+                <MapPin className="w-5 h-5 text-orange-500" />
+              </div>
+              <div>
+                <h4 className="font-bold text-navy-950 text-sm">Manzil</h4>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  100174, Toshkent shahri, Olmazor tumani, Universitet ko'chasi, 4-uy (O'zMU Bosh binosi)
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-start gap-4">
+              <div className="p-3 rounded-lg bg-slate-100 text-navy-950 shrink-0">
+                <Phone className="w-5 h-5 text-orange-500" />
+              </div>
+              <div>
+                <h4 className="font-bold text-navy-950 text-sm">Telefon va Faks</h4>
+                <p className="text-xs text-slate-600 mt-1">Ofis: +998 71 246 54 17</p>
+                <p className="text-xs text-slate-600">Faks: +998 71 246 02 24</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-start gap-4">
+              <div className="p-3 rounded-lg bg-slate-100 text-navy-950 shrink-0">
+                <Mail className="w-5 h-5 text-orange-500" />
+              </div>
+              <div>
+                <h4 className="font-bold text-navy-950 text-sm">Elektron pochta</h4>
+                <p className="text-xs text-slate-600 mt-1">nano-center@nuu.uz</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-start gap-4">
+              <div className="p-3 rounded-lg bg-slate-100 text-navy-950 shrink-0">
+                <Clock className="w-5 h-5 text-orange-500" />
+              </div>
+              <div>
+                <h4 className="font-bold text-navy-950 text-sm">Ish tartibi</h4>
+                <p className="text-xs text-slate-600 mt-1">Dushanba - Shanba: 09:00 - 18:00</p>
+                <p className="text-xs text-slate-600">Yakshanba: Dam olish kuni</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="bg-navy-950 text-white rounded-xl p-6 flex flex-col justify-between shadow-sm">
+            <div>
+              <h3 className="text-lg font-bold text-orange-400 mb-2">Markaz Axborot Xizmati</h3>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Ilmiy hamkorlik, laboratoriya xizmatlari yoki tadqiqotlar bo'yicha savollaringiz bo'lsa, ko'rsatilgan aloqa kanallari orqali bog'lanishingiz mumkin.
+              </p>
+            </div>
+            <div className="mt-6 border-t border-white/10 pt-4 text-[11px] text-slate-400">
+              O'zbekiston Milliy Universiteti qoshidagi Nanotexnologiyalarni rivojlantirish markazi
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. BIZ HAQIMIZDA BO'LIMI */}
+      <section className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6">
         <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
           <h2 className="text-2xl font-bold text-navy-950">{t("about.title")}</h2>
           <div className="mt-3 h-1 w-16 rounded-full bg-orange-500" />
