@@ -5,7 +5,7 @@ import { CategoryGrid } from "@/components/CategoryGrid";
 import { LabsSection } from "@/components/LabsSection";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Beaker } from "lucide-react";
 
 export default async function HomePage({
   params,
@@ -156,38 +156,66 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 4. XODIMLAR BO'LIMI (id="staff") */}
+      {/* 4. XODIMLAR VA LABORATORIYA RAHBARLARI BO'LIMI (id="staff") */}
       <section id="staff" className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6 scroll-mt-24">
         <h2 className="mb-6 text-xl font-bold text-navy-950 uppercase tracking-wide border-l-4 border-orange-500 pl-3">
-          Yetakchi Xodimlar va Olimlar
+          Laboratoriya rahbarlari va ilmiy yo'nalishlar
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-full bg-navy-950 text-white font-bold text-lg flex items-center justify-center shrink-0">
-                O.O.
-              </div>
-              <div>
-                <h4 className="font-bold text-navy-950 text-base">Ochilov Odil</h4>
-                <p className="text-xs font-semibold text-orange-600">Kvant fotonikasi laboratoriyasi mudiri</p>
-                <p className="text-xs text-slate-500 mt-0.5">Fizika-matematika fanlari nomzodi</p>
-              </div>
-            </div>
-          </div>
+          {labs.map((lab: any) => {
+            // Til bo'yicha ma'lumotlarni tanlash
+            const labName =
+              params.locale === "uz" ? lab.nameUz : params.locale === "ru" ? lab.nameRu : lab.nameEn;
+            const headName =
+              (params.locale === "uz" ? lab.headUz : params.locale === "ru" ? lab.headRu : lab.headEn) ||
+              lab.head ||
+              "Laboratoriya mudiri";
+            const direction =
+              (params.locale === "uz"
+                ? lab.directionUz || lab.descriptionUz
+                : params.locale === "ru"
+                ? lab.directionRu || lab.descriptionRu
+                : lab.directionEn || lab.descriptionEn) || "Ilmiy-tadqiqot va amaliy ishlanmalar yo'nalishi";
 
-          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-full bg-navy-950 text-white font-bold text-lg flex items-center justify-center shrink-0">
-                N.T.
+            // Ismdan bosh harflarni yaratish (Monogramma)
+            const initials = headName
+              .split(" ")
+              .filter(Boolean)
+              .slice(0, 2)
+              .map((word: string) => word[0].toUpperCase())
+              .join(".");
+
+            return (
+              <div
+                key={lab.id}
+                className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-navy-950 text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
+                    {initials || "L.R."}
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="font-bold text-navy-950 text-base leading-snug">
+                      {headName}
+                    </h3>
+                    <p className="text-xs font-semibold text-orange-600">
+                      {labName}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-t border-slate-100 pt-3">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                    Ilmiy yo'nalishi:
+                  </span>
+                  <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
+                    {direction}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-bold text-navy-950 text-base">Ilmiy-tadqiqot guruhi</h4>
-                <p className="text-xs font-semibold text-orange-600">Katta va kichik ilmiy xodimlar</p>
-                <p className="text-xs text-slate-500 mt-0.5">Nanomateriallar va optika mutaxassislari</p>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </section>
 
