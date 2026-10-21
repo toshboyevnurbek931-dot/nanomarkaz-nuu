@@ -3,7 +3,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { LabsSection } from "@/components/LabsSection";
-import { NeuralCanvas } from "@/components/NeuralCanvas";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import {
@@ -41,17 +40,16 @@ export default async function HomePage({ params }: { params: { locale: string } 
 
   return (
     <div className="min-h-screen bg-[#f4f8fc] pb-24 text-slate-800 antialiased">
-      {/* HERO — AI neyron tarmoq muhiti */}
+      {/* HERO — AI neyron va laboratoriya muhiti */}
       <section className="relative isolate overflow-hidden border-b border-sky-100 bg-gradient-to-b from-white via-sky-50 to-[#f4f8fc]">
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#dbeafe_1px,transparent_1px),linear-gradient(to_bottom,#dbeafe_1px,transparent_1px)] bg-[size:48px_48px] opacity-60 [mask-image:radial-gradient(ellipse_70%_80%_at_50%_30%,#000_40%,transparent_100%)]" />
-        <NeuralCanvas className="absolute inset-0 -z-10 h-full w-full" />
         <div className="absolute -top-24 left-1/4 -z-10 h-80 w-80 rounded-full bg-sky-300/30 blur-3xl" />
         <div className="absolute -right-10 top-10 -z-10 h-72 w-72 rounded-full bg-indigo-200/40 blur-3xl" />
 
         <div className={`${wrap} grid items-center gap-10 py-16 lg:grid-cols-[1.4fr_1fr] lg:py-24`}>
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white/80 px-4 py-1.5 text-sm font-semibold text-sky-700 backdrop-blur">
-              <BrainCircuit className="h-4 w-4" /> Sun&apos;iy intellekt bilan boyitilgan ilmiy muhit
+              <BrainCircuit className="h-4 w-4 text-sky-600" /> Sun&apos;iy intellekt va kvant texnologiyalar muhiti
             </span>
             <h1 className="mt-5 text-4xl font-black leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
               Nanotexnologiyalarni rivojlantirish markazi
