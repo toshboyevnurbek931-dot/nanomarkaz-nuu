@@ -5,7 +5,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  // directUrl qatorini olib tashlang
 }
 
 model News {
@@ -50,7 +49,7 @@ model LabPost {
   titleRu   String?
   titleEn   String?
   imageUrl  String?
-  videoUrl  String?          // video qo‘llab-quvvatlash uchun
+  videoUrl  String?
   contentUz String
   contentRu String?
   contentEn String?
@@ -59,4 +58,12 @@ model LabPost {
 
   @@index([labSlug])
   @@index([createdAt])
+}
+
+// Bosh sahifa orqa foni va sozlamalarini saqlash uchun yangi model
+model SiteSettings {
+  id            String   @id @default("settings")
+  heroVideoUrl  String?  // Video havolasi (masalan, .mp4)
+  heroPosterUrl String?  // Video yuklanmaguncha/bo'lmaganda ko'rinadigan rasm URL
+  updatedAt     DateTime @updatedAt
 }
