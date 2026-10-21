@@ -38,34 +38,44 @@ export default async function HomePage({
               {news.map((item) => (
                 <div
                   key={item.id}
-                  className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
+                  className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md h-[450px]" 
+                  // h-[450px] orqali barcha kartalar balandligi bir xil bo'lishi ta'minlanadi
                 >
-                  <div className="relative h-44 w-full bg-slate-100">
+                  {/* Rasm qismi - `object-contain` yordamida rasmlar original nisbatda to'liq (aniq va kesilmasdan) ko'rsatiladi */}
+                  <div className="relative h-48 w-full bg-slate-100/80 p-2 overflow-hidden flex items-center justify-center">
                     <Image
                       src={item.imageUrl || "https://i.postimg.cc/zG3j4DTC/photo-2026-09-17-14-08-37.jpg"}
                       alt={item.title}
                       fill
-                      className="object-cover"
+                      className="object-contain p-2" // object-contain rasmni o'z holicha siqib, kesmasdan to'liq ko'rsatadi
                     />
                   </div>
+
+                  {/* Matnlar va Batafsil tugmasi joylashgan qism */}
                   <div className="flex flex-1 flex-col justify-between p-4">
-                    <div>
-                      <span className="text-[10px] font-semibold text-orange-600 bg-orange-50 px-2 py-0.5 rounded">
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-semibold text-orange-600 bg-orange-50 px-2 py-0.5 rounded inline-block">
                         {new Date(item.date).toLocaleDateString()}
                       </span>
-                      <h3 className="mt-2 line-clamp-2 text-sm font-bold text-slate-900 leading-snug">
+                      
+                      {/* Sarlavha: Maksimal 2 qator va uning balandligi bir xil bo'ladi */}
+                      <h3 className="line-clamp-2 text-sm font-bold text-slate-900 leading-snug min-h-[40px] hover:text-orange-500 transition-colors">
                         {item.title}
                       </h3>
-                      <p className="mt-2 line-clamp-3 text-xs text-slate-600">
+                      
+                      {/* Tavsif (matni): qisqa formatda 3 qatorda ko'rinadi, batafsilni bosganda to'liq chiqadi */}
+                      <p className="line-clamp-3 text-xs text-slate-600 leading-relaxed min-h-[54px]">
                         {item.content}
                       </p>
                     </div>
-                    <div className="mt-4 border-t border-slate-100 pt-3">
+
+                    {/* Pastki qism: Batafsil tugmasi */}
+                    <div className="border-t border-slate-100 pt-3">
                       <Link
                         href={`/news/${item.id}`}
-                        className="text-xs font-bold text-navy-900 hover:text-orange-500"
+                        className="text-xs font-bold text-navy-900 hover:text-orange-500 inline-flex items-center gap-1 group"
                       >
-                        Batafsil →
+                        Batafsil <span className="group-hover:translate-x-1 transition-transform">→</span>
                       </Link>
                     </div>
                   </div>
@@ -115,7 +125,7 @@ export default async function HomePage({
         <LabsSection labs={labs} locale={params.locale} />
       </div>
 
-      {/* 3. RAHBARIYAT BO'LIMI (id="leadership") */}
+      {/* 3. RAHBARIYAT BO'LIMI */}
       <section id="leadership" className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6 scroll-mt-24">
         <h2 className="mb-6 text-xl font-bold text-navy-950 uppercase tracking-wide border-l-4 border-orange-500 pl-3">
           Markaz Rahbariyati
@@ -156,7 +166,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 4. XODIMLAR VA LABORATORIYA RAHBARLARI BO'LIMI (id="staff") */}
+      {/* 4. XODIMLAR VA LABORATORIYA RAHBARLARI BO'LIMI */}
       <section id="staff" className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6 scroll-mt-24">
         <h2 className="mb-6 text-xl font-bold text-navy-950 uppercase tracking-wide border-l-4 border-orange-500 pl-3">
           Laboratoriya rahbarlari va ilmiy yo'nalishlar
@@ -164,7 +174,6 @@ export default async function HomePage({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {labs.map((lab: any) => {
-            // Til bo'yicha ma'lumotlarni tanlash
             const labName =
               params.locale === "uz" ? lab.nameUz : params.locale === "ru" ? lab.nameRu : lab.nameEn;
             const headName =
@@ -178,7 +187,6 @@ export default async function HomePage({
                 ? lab.directionRu || lab.descriptionRu
                 : lab.directionEn || lab.descriptionEn) || "Ilmiy-tadqiqot va amaliy ishlanmalar yo'nalishi";
 
-            // Ismdan bosh harflarni yaratish (Monogramma)
             const initials = headName
               .split(" ")
               .filter(Boolean)
@@ -219,7 +227,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 5. ALOQA BO'LIMI (id="contact") */}
+      {/* 5. ALOQA BO'LIMI */}
       <section id="contact" className="mx-auto max-w-[95%] px-2 sm:px-4 lg:px-6 scroll-mt-24">
         <h2 className="mb-6 text-xl font-bold text-navy-950 uppercase tracking-wide border-l-4 border-orange-500 pl-3">
           Aloqa Ma'lumotlari
