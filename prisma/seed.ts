@@ -13,9 +13,9 @@ async function main() {
         nameUz: "Murakkab tuzilmalar nanofizikasi laboratoriyasi",
         nameRu: "Лаборатория нанофизики сложных структур",
         nameEn: "Nanophysics of Complex Structures Laboratory",
-        headUz: "Jamshid Kenja Avloni",
-        headRu: "Джамшид Кенжа Авлони",
-        headEn: "Jamshid Kenja Avloni",
+        headUz: "Abdurashid Ashurmetov",
+        headRu: "Абдурашид Ашурметов",
+        headEn: "Abdurashid Ashurmetov",
         descriptionUz:
           "Laboratoriya murakkab nanostrukturalarning fizik xossalari, spintronika va past o‘lchamli tizimlarda elektron tashish jarayonlarini tadqiq qiladi.",
         descriptionRu:
