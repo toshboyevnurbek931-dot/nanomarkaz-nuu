@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import {
   MapPin, Phone, Mail, Clock, Atom, Microscope, Cpu, Layers,
-  FlaskConical, Database, ChevronRight, BrainCircuit, ArrowRight, Radio, Sparkles
+  FlaskConical, Database, ChevronRight, ArrowRight, Radio, Sparkles
 } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -46,61 +46,82 @@ export default async function HomePage({ params }: { params: { locale: string } 
   return (
     <div className="min-h-screen bg-[#f8fafc] pb-24 text-slate-800 antialiased selection:bg-blue-500 selection:text-white">
       
-      {/* 1. HERO — AI va Kvant texnologiyalari muhiti */}
-      <section className="relative isolate overflow-hidden border-b border-blue-100 bg-gradient-to-b from-white via-sky-50/50 to-[#f8fafc]">
-        {/* Orqa fon to'r va yorug'lik effektlari */}
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px] opacity-70 [mask-image:radial-gradient(ellipse_60%_80%_at_50%_30%,#000_50%,transparent_100%)]" />
-        <div className="absolute -top-24 left-1/4 -z-10 h-96 w-96 rounded-full bg-blue-400/20 blur-[100px] animate-pulse" />
-        <div className="absolute -right-10 top-20 -z-10 h-80 w-80 rounded-full bg-indigo-400/15 blur-[100px]" />
+      {/* 1. HERO — Video va Rasm Fonli To'liq Ekran */}
+      <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden bg-slate-900">
+        
+        {/* ORQA FON: Video va Overlay. (Admin paneldan o'zgaradigan URL ni "src" ga berasiz) */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="h-full w-full object-cover opacity-80"
+            // Video yuklanmaguncha chiqib turadigan orqa fon rasmi (fallback):
+            poster="https://i.postimg.cc/QtxmK44y/nano-tech-bg.jpg" 
+          >
+            {/* Zamonaviy ilmiy, molekulyar tarmoq videosi (Namuna) */}
+            <source src="https://cdn.pixabay.com/video/2020/09/14/49880-459196556_large.mp4" type="video/mp4" />
+          </video>
+          
+          {/* Gradient qoraytirish: Yozuvlar ustida oppoq va aniq ko'rinishi uchun */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/70 to-slate-900/40" />
+        </div>
 
-        <div className={`${wrap} grid items-center gap-12 py-16 lg:grid-cols-[1.4fr_1fr] lg:py-24`}>
-          <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-700 backdrop-blur-md shadow-sm transition hover:scale-105 cursor-default">
-              <Sparkles className="h-4 w-4 text-blue-600" /> Sun&apos;iy intellekt va kvant texnologiya
+        <div className={`${wrap} relative z-10 grid items-center gap-12 py-16 lg:grid-cols-[1.3fr_1fr]`}>
+          
+          {/* Chap qism: Matnlar */}
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/20 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-300 backdrop-blur-md shadow-sm transition hover:scale-105 cursor-default">
+              <Sparkles className="h-4 w-4 text-blue-400" /> Kvant texnologiyalari va Ilmiy muhit
             </div>
-            <h1 className="mt-6 text-5xl font-black leading-[1.1] tracking-tight text-slate-900 sm:text-6xl lg:text-7xl drop-shadow-sm">
+            {/* Yozuv hajmi kichraytirildi (text-4xl sm:text-5xl) va ekranga moslandi */}
+            <h1 className="mt-6 text-3xl font-black leading-[1.2] tracking-tight text-white sm:text-4xl lg:text-5xl drop-shadow-lg">
               Nanotexnologiyalarni <br className="hidden sm:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
                 rivojlantirish markazi
               </span>
             </h1>
-            <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-slate-600">
-              O&apos;zbekiston Milliy universiteti qoshidagi ilmiy-tadqiqot markazi: kvant materiallar, nanotexnologiya
+            <p className="mt-5 text-base font-medium leading-relaxed text-slate-300 sm:text-lg">
+              O'zbekiston Milliy universiteti qoshidagi ilmiy-tadqiqot markazi: kvant materiallar, nanotexnologiya
               va zamonaviy laboratoriyalar bir raqamli portalda jamlangan.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a href="#news" className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-7 py-3.5 font-bold text-white shadow-lg shadow-blue-500/30 transition-all duration-300 hover:scale-105 hover:shadow-blue-500/50 active:scale-95">
-                So&apos;nggi yangiliklar <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <a href="#news" className="group inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-bold text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all duration-300 hover:scale-105 hover:bg-blue-500 hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] active:scale-95">
+                So'nggi yangiliklar <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
-              <a href="#staff" className="inline-flex items-center gap-2 rounded-xl border-2 border-slate-200 bg-white/50 px-7 py-3.5 font-bold text-slate-700 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-blue-500 hover:text-blue-700 hover:bg-white hover:shadow-lg active:scale-95">
+              <a href="#staff" className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3 font-bold text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:border-white/40 active:scale-95">
                 Laboratoriyalar
               </a>
             </div>
           </div>
 
-          {/* O'ng tomon: Katta raqamli bloklar (Hover effekti bilan) */}
+          {/* O'ng tomon: Katta raqamli bloklar (Dark mode glassmorphism) */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1 relative z-10">
             {[
               { n: labs.length, l: "Laboratoriya", i: <Microscope className="h-6 w-6" /> },
               { n: news.length, l: "Yangilik va voqea", i: <Radio className="h-6 w-6" /> },
               { n: 3, l: "Til: UZ · RU · EN", i: <Layers className="h-6 w-6" /> },
             ].map((s) => (
-              <div key={s.l} className="group flex items-center gap-5 rounded-2xl border border-white/60 bg-white/60 p-5 shadow-lg shadow-slate-200/50 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:bg-white hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/15">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-100 to-sky-50 text-blue-600 shadow-inner transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <div key={s.l} className="group flex items-center gap-5 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-white/10 hover:border-blue-400/50">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-blue-500/20 text-blue-400 shadow-inner transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                   {s.i}
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-slate-900">{s.n}</div>
-                  <div className="text-sm font-bold text-slate-500">{s.l}</div>
+                  <div className="text-2xl font-black text-white">{s.n}</div>
+                  <div className="text-sm font-bold text-slate-300">{s.l}</div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+        
+        {/* Pastki qismning silliq o'tishi (Gradient tushish) */}
+        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#f8fafc] to-transparent z-10" />
       </section>
 
       {/* 2. YANGILIKLAR */}
-      <section id="news" className={`${wrap} scroll-mt-28 pt-20`}>
+      <section id="news" className={`${wrap} scroll-mt-28 pt-10`}>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="lg:col-span-3">
             <SectionTitle icon={<Atom className="h-7 w-7" />}>Yangiliklar va voqealar</SectionTitle>
@@ -155,7 +176,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-70" />
                   <span className="relative inline-flex h-3 w-3 rounded-full bg-orange-500" />
                 </span>
-                <h3 className="font-extrabold text-slate-900 text-lg">So&apos;nggi qo&apos;shilgan</h3>
+                <h3 className="font-extrabold text-slate-900 text-lg">So'nggi qo'shilgan</h3>
               </div>
               <div className="divide-y divide-slate-100">
                 {news.slice(0, 5).map((item) => (
@@ -197,12 +218,12 @@ export default async function HomePage({ params }: { params: { locale: string } 
               </span>
               <h3 className="mt-4 text-3xl font-black text-slate-900 sm:text-4xl">Komil Muqimovich Muqimov</h3>
               <p className="mt-2 text-base font-bold text-blue-700">
-                Fizika-matematika fanlari doktori, professor, O&apos;zbekiston Fanlar akademiyasi akademigi
+                Fizika-matematika fanlari doktori, professor, O'zbekiston Fanlar akademiyasi akademigi
               </p>
             </div>
             <div className="space-y-4 border-t border-slate-100 pt-6 text-sm font-medium leading-relaxed text-slate-600">
-              <p><strong className="text-slate-900 font-extrabold">Faoliyati:</strong> O&apos;zbekiston Milliy universiteti qoshidagi Nanotexnologiyalarni rivojlantirish markazi rahbari. Magnetizm, optika, magnetooptika hamda nanomateriallar va spintronika sohalarida yirik ilmiy maktab yaratgan yetakchi olim.</p>
-              <p><strong className="text-slate-900 font-extrabold">Mukofotlari:</strong> &quot;Do&apos;stlik&quot; ordeni (2024-yil) va &quot;Mehnat Faxriysi&quot; ko&apos;krak nishoni (2023-yil) sohibi.</p>
+              <p><strong className="text-slate-900 font-extrabold">Faoliyati:</strong> O'zbekiston Milliy universiteti qoshidagi Nanotexnologiyalarni rivojlantirish markazi rahbari. Magnetizm, optika, magnetooptika hamda nanomateriallar va spintronika sohalarida yirik ilmiy maktab yaratgan yetakchi olim.</p>
+              <p><strong className="text-slate-900 font-extrabold">Mukofotlari:</strong> "Do'stlik" ordeni (2024-yil) va "Mehnat Faxriysi" ko'krak nishoni (2023-yil) sohibi.</p>
             </div>
           </div>
         </div>
@@ -210,7 +231,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
 
       {/* 5. LABORATORIYA RAHBARLARI */}
       <section id="staff" className={`${wrap} mt-20 scroll-mt-28`}>
-        <SectionTitle icon={<Microscope className="h-7 w-7" />}>Laboratoriya va yo&apos;nalishlar</SectionTitle>
+        <SectionTitle icon={<Microscope className="h-7 w-7" />}>Laboratoriya va yo'nalishlar</SectionTitle>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {labs.map((lab: any) => {
             const L = params.locale;
@@ -234,7 +255,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
                   </div>
                 </div>
                 <div className="mt-5 border-t border-slate-100 pt-4">
-                  <span className="mb-2 block text-[11px] font-black uppercase tracking-wider text-slate-400">Ilmiy yo&apos;nalishi</span>
+                  <span className="mb-2 block text-[11px] font-black uppercase tracking-wider text-slate-400">Ilmiy yo'nalishi</span>
                   <p className="line-clamp-3 text-sm font-medium leading-relaxed text-slate-600">{direction}</p>
                 </div>
               </div>
@@ -245,7 +266,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
 
       {/* 6. ALOQA */}
       <section id="contact" className={`${wrap} mt-20 scroll-mt-28`}>
-        <SectionTitle icon={<Database className="h-7 w-7" />}>Aloqa ma&apos;lumotlari</SectionTitle>
+        <SectionTitle icon={<Database className="h-7 w-7" />}>Aloqa ma'lumotlari</SectionTitle>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-2">
             {[
@@ -273,11 +294,11 @@ export default async function HomePage({ params }: { params: { locale: string } 
             <div className="relative z-10">
               <h3 className="text-2xl font-black">Markaz axborot xizmati</h3>
               <p className="mt-4 text-sm font-medium leading-relaxed text-blue-50">
-                Ilmiy hamkorlik, laboratoriya xizmatlari yoki tadqiqotlar bo&apos;yicha savollaringiz bo&apos;lsa, ko&apos;rsatilgan aloqa kanallari orqali markazimiz ma'muriyati bilan bog&apos;lanishingiz mumkin.
+                Ilmiy hamkorlik, laboratoriya xizmatlari yoki tadqiqotlar bo'yicha savollaringiz bo'lsa, ko'rsatilgan aloqa kanallari orqali markazimiz ma'muriyati bilan bog'lanishingiz mumkin.
               </p>
             </div>
             <p className="relative z-10 mt-8 border-t border-white/20 pt-5 text-[11px] font-black uppercase tracking-wider text-blue-100">
-              O&apos;zbekiston Milliy universiteti qoshidagi Nanotexnologiyalarni rivojlantirish markazi
+              O'zbekiston Milliy universiteti qoshidagi Nanotexnologiyalarni rivojlantirish markazi
             </p>
           </div>
         </div>
