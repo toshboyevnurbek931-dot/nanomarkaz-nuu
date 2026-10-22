@@ -35,7 +35,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
   setRequestLocale(params.locale);
   const t = await getTranslations();
 
-  // Bazadan parallel ma'lumotlarni o'qib olish (SiteSettings integratsiyasi)
+  // Bazadan parallel ma'lumotlarni o'qib olish
   const [news, labs, settings] = await Promise.all([
     prisma.news.findMany({ where: { language: params.locale }, orderBy: { date: "desc" } }),
     prisma.lab.findMany({ orderBy: { nameEn: "asc" } }),
@@ -54,80 +54,48 @@ export default async function HomePage({ params }: { params: { locale: string } 
   return (
     <div className="min-h-screen bg-[#f8fafc] pb-24 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
       
-      {/* 1. HERO BO'LIMI — KREATIV VA OCHROQ FON BILAN */}
+      {/* 1. HERO BO'LIMI */}
       <section className="relative flex min-h-[88vh] w-full items-center justify-center overflow-hidden bg-slate-950">
-        
-        {/* Dynamic Video / Poster Background */}
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            key={heroVideo}
-            poster={heroPoster}
-            className="h-full w-full object-cover opacity-90 transition-opacity duration-1000"
-          >
+          <video autoPlay loop muted playsInline key={heroVideo} poster={heroPoster} className="h-full w-full object-cover opacity-90 transition-opacity duration-1000">
             <source src={heroVideo} type="video/mp4" />
           </video>
-          
-          {/* Asosiy qorong'ilashtirish: Oldingidan 25-30% ochroq, o'ng tomoni ochiqroq qoldirildi */}
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/40 to-slate-900/10" />
-          
-          {/* Kreativ Nano-Grid effekti (Yuqori texnologiyalar hissini beradi) */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-          
-          {/* Kvant porlash effekti */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(37,99,235,0.3),transparent_50%)] mix-blend-screen" />
         </div>
 
         <div className={`${wrap} relative z-10 grid items-center gap-10 py-16 lg:grid-cols-[1.35fr_1fr] lg:py-24`}>
-          
-          {/* Chap Tomon: Matnlar va Call to Action */}
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/20 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-200 backdrop-blur-md shadow-lg">
               <Sparkles className="h-4 w-4 text-blue-400" /> Sun&apos;iy Intellekt va Kvant Muhiti
             </div>
-            
-            {/* Sarlavha fon ochroq bo'lgani uchun ko'lanka (drop-shadow) kuchaytirildi */}
             <h1 className="mt-5 text-3xl font-black leading-[1.2] tracking-tight text-white sm:text-4xl lg:text-5xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.6)]">
               Nanotexnologiyalarni <br className="hidden sm:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-300 to-indigo-300 drop-shadow-sm">
                 Rivojlantirish Markazi
               </span>
             </h1>
-            
             <p className="mt-4 text-sm font-medium leading-relaxed text-slate-200 sm:text-base lg:text-lg drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
               O&apos;zbekiston Milliy universiteti qoshidagi ilmiy-tadqiqot markazi: kvant materiallar, nanotexnologiya va zamonaviy laboratoriyalar bir raqamli portalda jamlangan.
             </p>
-            
             <div className="mt-8 flex flex-wrap gap-4">
-              <a 
-                href="#news" 
-                className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] active:scale-95"
-              >
+              <a href="#news" className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] active:scale-95">
                 So&apos;nggi yangiliklar <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
-              <a 
-                href="#staff" 
-                className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-black/20 px-6 py-3 text-sm font-bold text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:border-white/50 active:scale-95 shadow-lg"
-              >
+              <a href="#staff" className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-black/20 px-6 py-3 text-sm font-bold text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:border-white/50 active:scale-95 shadow-lg">
                 Laboratoriyalar
               </a>
             </div>
           </div>
 
-          {/* O'ng Tomon: Metrikalar */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1 relative z-10">
             {[
               { n: labs.length, l: "Laboratoriyalar", i: <Microscope className="h-6 w-6" /> },
               { n: news.length, l: "Yangilik va voqealar", i: <Radio className="h-6 w-6" /> },
               { n: 3, l: "Til: UZ · RU · EN", i: <Layers className="h-6 w-6" /> },
             ].map((s) => (
-              <div 
-                key={s.l} 
-                className="group flex items-center gap-5 rounded-2xl border border-white/20 bg-slate-900/40 p-4.5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-slate-800/50 hover:border-blue-400/50"
-              >
+              <div key={s.l} className="group flex items-center gap-5 rounded-2xl border border-white/20 bg-slate-900/40 p-4.5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-slate-800/50 hover:border-blue-400/50">
                 <div className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-blue-500/20 text-blue-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                   {s.i}
                 </div>
@@ -139,12 +107,10 @@ export default async function HomePage({ params }: { params: { locale: string } 
             ))}
           </div>
         </div>
-        
-        {/* Silliqroq va balandroq bottom fade (Kengroq va yumshoqroq o'tish effekti) */}
         <div className="absolute bottom-0 left-0 w-full h-32 lg:h-48 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc]/90 to-transparent z-10 pointer-events-none" />
       </section>
 
-      {/* 2. YANGILIKLAR BO'LIMI */}
+      {/* 2. YANGILIKLAR BO'LIMI - BLUR FON EFFEKTI BILAN YANGILANDI */}
       <section id="news" className={`${wrap} scroll-mt-28 pt-8`}>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="lg:col-span-3">
@@ -153,16 +119,30 @@ export default async function HomePage({ params }: { params: { locale: string } 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
               {news.map((item) => (
                 <article key={item.id} className={`${aiCardStyle} group flex flex-col`}>
-                  <div className="relative h-52 w-full border-b border-slate-100 bg-slate-50 overflow-hidden">
+                  
+                  {/* Yangilangan Rasm Konteyneri (Blur fon bilan) */}
+                  <div className="relative h-56 w-full overflow-hidden bg-slate-900">
+                    
+                    {/* Orqa fon: Aynan shu rasmning xira, to'q va kattalashtirilgan formati */}
+                    <Image
+                      src={item.imageUrl || FALLBACK_IMG}
+                      alt=""
+                      fill
+                      quality={20}
+                      className="object-cover blur-xl opacity-40 scale-125 transition-all duration-700 ease-out group-hover:scale-150 group-hover:opacity-60"
+                    />
+                    
+                    {/* Asosiy Rasm: O'rtada tiniq va aniq saqlanadi, drop-shadow orqali fonga singib ketmaydi */}
                     <Image
                       src={item.imageUrl || FALLBACK_IMG}
                       alt={item.title}
                       fill
                       sizes={IMG_SIZES}
                       quality={90}
-                      className="object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-105"
+                      className="relative z-10 object-contain p-3 drop-shadow-2xl transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                   </div>
+
                   <div className="flex flex-1 flex-col p-5">
                     <time className="w-fit rounded-full bg-orange-100/80 px-2.5 py-0.5 text-[11px] font-bold text-orange-700 ring-1 ring-orange-200/60">
                       {new Date(item.date).toLocaleDateString()}
@@ -182,6 +162,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
             </div>
           </div>
 
+          {/* O'ng tomon Sidebar */}
           <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start pt-[72px]">
             <div className={`${aiCardStyle} p-5`}>
               <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
