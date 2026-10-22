@@ -110,7 +110,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <div className="absolute bottom-0 left-0 w-full h-32 lg:h-48 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc]/90 to-transparent z-10 pointer-events-none" />
       </section>
 
-      {/* 2. YANGILIKLAR BO'LIMI - BLUR FON EFFEKTI BILAN YANGILANDI */}
+      {/* 2. YANGILIKLAR BO'LIMI - YORQIN VA MOSLASHTIRILGAN BLUR FON */}
       <section id="news" className={`${wrap} scroll-mt-28 pt-8`}>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="lg:col-span-3">
@@ -120,26 +120,29 @@ export default async function HomePage({ params }: { params: { locale: string } 
               {news.map((item) => (
                 <article key={item.id} className={`${aiCardStyle} group flex flex-col`}>
                   
-                  {/* Yangilangan Rasm Konteyneri (Blur fon bilan) */}
-                  <div className="relative h-56 w-full overflow-hidden bg-slate-900">
+                  {/* Yangilangan Rasm Konteyneri - Yorqin fon va chetda ochiq joylarsiz */}
+                  <div className="relative h-56 w-full overflow-hidden bg-slate-50">
                     
-                    {/* Orqa fon: Aynan shu rasmning xira, to'q va kattalashtirilgan formati */}
+                    {/* Orqa fon: Yorqinroq, biroz xiralashtirilgan (blur-md) va to'liq qoplovchi */}
                     <Image
                       src={item.imageUrl || FALLBACK_IMG}
                       alt=""
                       fill
                       quality={20}
-                      className="object-cover blur-xl opacity-40 scale-125 transition-all duration-700 ease-out group-hover:scale-150 group-hover:opacity-60"
+                      className="object-cover blur-md opacity-60 scale-110 transition-transform duration-700 ease-out group-hover:scale-125"
                     />
                     
-                    {/* Asosiy Rasm: O'rtada tiniq va aniq saqlanadi, drop-shadow orqali fonga singib ketmaydi */}
+                    {/* Oqish qatlam (Overlay) - fonni postning oq rangiga mos qilib yumshatish uchun */}
+                    <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px] transition-opacity duration-500 group-hover:opacity-20" />
+                    
+                    {/* Asosiy Rasm: Padding olib tashlandi, markazda aniq ko'rinadi va fonga singib ketadi */}
                     <Image
                       src={item.imageUrl || FALLBACK_IMG}
                       alt={item.title}
                       fill
                       sizes={IMG_SIZES}
                       quality={90}
-                      className="relative z-10 object-contain p-3 drop-shadow-2xl transition-transform duration-500 ease-out group-hover:scale-105"
+                      className="relative z-10 object-contain drop-shadow-md transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                   </div>
 
@@ -162,7 +165,6 @@ export default async function HomePage({ params }: { params: { locale: string } 
             </div>
           </div>
 
-          {/* O'ng tomon Sidebar */}
           <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start pt-[72px]">
             <div className={`${aiCardStyle} p-5`}>
               <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
@@ -195,6 +197,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
         </div>
       </section>
 
+      {/* QOLGAN BO'LIMLAR... */}
       {/* 3. KATEGORIYA VA LABORATORIYA GRIDLARI */}
       <div className={`${wrap} mt-16`}>
         <CategoryGrid />
