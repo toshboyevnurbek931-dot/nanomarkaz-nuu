@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { LabsSection } from "@/components/LabsSection";
-import { HeroBackground } from "@/components/HeroBackground"; // Yangi slayder ulandi
+import { HeroBackground } from "@/components/HeroBackground";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import {
@@ -47,19 +47,18 @@ export default async function HomePage({ params }: { params: { locale: string } 
   const aiCardStyle = "relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-lg shadow-slate-200/40 transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.015] hover:border-blue-400/50 hover:shadow-2xl hover:shadow-blue-500/15 hover:bg-white";
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] pb-24 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-[#f8fafc] pb-24 text-slate-800 antialiased selection:bg-cyan-600 selection:text-white">
       
-      {/* 1. HERO BO'LIMI — ORQA FONDA DINAMIK SLAYDER BILAN */}
-      <section className="relative flex min-h-[92vh] w-full items-center justify-center overflow-hidden bg-slate-950">
+      {/* 1. HERO BO'LIMI */}
+      <section className="relative flex min-h-[95vh] w-full items-center justify-center overflow-hidden bg-slate-950">
         
-        {/* Yangi orqa fon slayderi */}
         <HeroBackground newsItems={news} defaultVideo={heroVideo} defaultPoster={heroPoster} />
 
-        {/* Kechagi yozuvlar va tartib o'zgarishsiz qoldi */}
-        <div className={`${wrap} relative z-10 grid items-center gap-10 py-16 pb-32 lg:grid-cols-[1.35fr_1fr] lg:py-24 lg:pb-36`}>
+        {/* Markaz sarlavhasi (O'zgartirilmagan) */}
+        <div className={`${wrap} relative z-10 grid items-center gap-10 pt-16 pb-48 lg:grid-cols-[1.35fr_1fr] lg:pt-24 lg:pb-52`}>
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/20 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-200 backdrop-blur-md shadow-lg">
-              <Sparkles className="h-4 w-4 text-blue-400" /> Sun&apos;iy Intellekt va Kvant Muhiti
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/15 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-cyan-200 backdrop-blur-md shadow-lg">
+              <Sparkles className="h-4 w-4 text-cyan-400" /> Sun&apos;iy Intellekt va Kvant Muhiti
             </div>
             <h1 className="mt-5 text-3xl font-black leading-[1.2] tracking-tight text-white sm:text-4xl lg:text-5xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.6)]">
               Nanotexnologiyalarni <br className="hidden sm:block" />
@@ -86,8 +85,8 @@ export default async function HomePage({ params }: { params: { locale: string } 
               { n: news.length, l: "Yangilik va voqealar", i: <Radio className="h-6 w-6" /> },
               { n: 3, l: "Til: UZ · RU · EN", i: <Layers className="h-6 w-6" /> },
             ].map((s) => (
-              <div key={s.l} className="group flex items-center gap-5 rounded-2xl border border-white/20 bg-slate-900/40 p-4.5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-slate-800/50 hover:border-blue-400/50">
-                <div className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-blue-500/20 text-blue-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <div key={s.l} className="group flex items-center gap-5 rounded-2xl border border-white/20 bg-slate-900/40 p-4.5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-slate-800/50 hover:border-cyan-400/50">
+                <div className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-cyan-500/20 text-cyan-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                   {s.i}
                 </div>
                 <div>
@@ -98,11 +97,32 @@ export default async function HomePage({ params }: { params: { locale: string } 
             ))}
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 w-full h-32 lg:h-48 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc]/90 to-transparent z-10 pointer-events-none" />
       </section>
 
+      {/* 1.5. NANO-ELEKTRONIKA (MIKROSXEMA) O'TISH QISMI */}
+      <div className="relative w-full h-16 sm:h-20 bg-[#f8fafc] overflow-hidden flex items-center justify-center border-b border-slate-200">
+        {/* Mikrosxema Grid naqshi */}
+        <div 
+          className="absolute inset-0 opacity-40" 
+          style={{ 
+            backgroundImage: 'linear-gradient(to right, #06b6d4 1px, transparent 1px), linear-gradient(to bottom, #06b6d4 1px, transparent 1px)', 
+            backgroundSize: '40px 40px', 
+            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1), transparent)' 
+          }} 
+        />
+        {/* Yonib turuvchi elektron chiziq */}
+        <div className="absolute top-0 left-0 w-full h-[1.5px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent shadow-[0_0_12px_rgba(6,182,212,0.9)]" />
+        
+        {/* Markaziy Mikrosxema nuqtalari */}
+        <div className="relative z-10 flex gap-2 sm:gap-3">
+          <div className="h-1.5 w-12 sm:w-24 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
+          <div className="h-1.5 w-6 sm:w-8 bg-blue-500 rounded-full" />
+          <div className="h-1.5 w-2 sm:w-3 bg-indigo-500 rounded-full" />
+        </div>
+      </div>
+
       {/* 2. YANGILIKLAR BO'LIMI */}
-      <section id="news" className={`${wrap} scroll-mt-28 pt-8`}>
+      <section id="news" className={`${wrap} scroll-mt-28 pt-12`}>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="lg:col-span-3">
             <SectionTitle icon={<Atom className="h-6 w-6" />}>Yangiliklar va voqealar</SectionTitle>

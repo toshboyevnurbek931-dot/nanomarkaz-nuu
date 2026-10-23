@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { ChevronRight, Radio } from "lucide-react";
+import { ChevronRight, Activity } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { News } from "@prisma/client";
 
@@ -15,27 +15,23 @@ interface HeroBackgroundProps {
 
 export function HeroBackground({ newsItems, defaultVideo, defaultPoster }: HeroBackgroundProps) {
   const [index, setIndex] = useState(0);
-
-  // Faqat oxirgi 5 ta yangilikni slayder uchun olamiz
   const slides = newsItems.length > 0 ? newsItems.slice(0, 5) : [];
 
   useEffect(() => {
     if (slides.length < 2) return;
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % slides.length);
-    }, 4000); // Har 4 sekundda almashadi
+    }, 4500); // 4.5 sekundda almashadi
     return () => clearInterval(timer);
   }, [slides.length]);
 
   const activeSlide = slides[index];
 
-  // Video fayl ekanligini aniqlash funksiyasi
   const isVideo = (url?: string | null) => {
     if (!url) return false;
     return url.endsWith(".mp4") || url.endsWith(".webm") || url.includes("supabase.co/storage/v1/object/public/videos");
   };
 
-  // Agar yangiliklar bo'lmasa, standart videoni aylantiramiz
   if (slides.length === 0) {
     return (
       <div className="absolute inset-0 z-0">
@@ -48,65 +44,66 @@ export function HeroBackground({ newsItems, defaultVideo, defaultPoster }: HeroB
   }
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden bg-slate-950">
-      {/* 1. Dinamik Media Slayderi (Rasm yoki Video) */}
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          key={activeSlide.id}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-          className="absolute inset-0"
-        >
-          {isVideo(activeSlide.imageUrl) ? (
-            <video autoPlay loop muted playsInline className="h-full w-full object-cover opacity-90">
-              <source src={activeSlide.imageUrl!} type="video/mp4" />
-            </video>
-          ) : (
-            <Image
-              src={activeSlide.imageUrl || defaultPoster}
-              alt={activeSlide.title}
-              fill
-              priority
-              className="object-cover opacity-90"
-            />
-          )}
-        </motion.div>
-      </AnimatePresence>
+    <div className="absolute inset-0 z-0 overflow-hidden bg-slate-950 flex flex-col justify-between">
+      {/* 1. MEDIA SLIDER */}
+      <div className="absolute inset-0 z-0">
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={activeSlide.id}
+            initial={{ opacity: 0, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            {isVideo(activeSlide.imageUrl) ? (
+              <video autoPlay loop muted playsInline className="h-full w-full object-cover opacity-80">
+                <source src={activeSlide.imageUrl!} type="video/mp4" />
+              </video>
+            ) : (
+              <Image src={activeSlide.imageUrl || defaultPoster} alt={activeSlide.title} fill priority className="object-cover opacity-80" />
+            )}
+          </motion.div>
+        </AnimatePresence>
+        
+        {/* Qorong'ilashtirish va Matnlar uchun to'siq */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/60 to-slate-900/20" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      </div>
 
-      {/* 2. Matnlar aniq ko'rinishi uchun gradient va Kvant Grid effekti */}
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/50 to-slate-900/20" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
+      <div className="flex-1" />
 
-      {/* 3. Ayni damda ekranda aylanayotgan yangilikning sarlavhasi (Pastda) */}
-      <div className="absolute bottom-16 sm:bottom-12 left-0 w-full z-20 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto w-full max-w-[1440px]">
+      {/* 2. KATTA SLIDER YOZUVLARI (FULL-WIDTH BANNER) */}
+      <div className="relative z-20 w-full bg-slate-950/85 backdrop-blur-2xl border-t border-cyan-500/40 pb-6 pt-6 shadow-[0_-10px_40px_rgba(6,182,212,0.15)]">
+        {/* Banner ustidagi yonib turuvchi nozik chiziq */}
+        <div className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_rgba(34,211,238,1)]" />
+
+        <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={`text-${activeSlide.id}`}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.5 }}
-              className="max-w-xl rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 p-4 sm:p-5 shadow-2xl relative overflow-hidden group"
+              className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-8"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative z-10">
+              <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <Radio className="h-4 w-4 text-blue-400 animate-pulse" />
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-300">
-                    Ayni damda ekranda
+                  <Activity className="h-5 w-5 text-cyan-400 animate-pulse" />
+                  <span className="text-[11px] sm:text-xs font-black uppercase tracking-[0.2em] text-cyan-400">
+                    Markaz Yangiliklari
                   </span>
                 </div>
-                <h3 className="text-sm sm:text-base font-extrabold text-white line-clamp-2 drop-shadow-md">
+                {/* Boshqacha rangli va katta yozuv */}
+                <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-200 to-white line-clamp-1 sm:line-clamp-2 drop-shadow-md">
                   {activeSlide.title}
                 </h3>
-                <Link href={`/news/${activeSlide.id}`} className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-blue-400 hover:text-blue-300 transition-colors">
-                  Batafsil o&apos;qish <ChevronRight className="h-3.5 w-3.5" />
-                </Link>
               </div>
+              
+              <Link href={`/news/${activeSlide.id}`} className="shrink-0 inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-cyan-500/10 border border-cyan-400/40 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 hover:shadow-[0_0_25px_rgba(34,211,238,0.5)] transition-all duration-300 text-sm font-extrabold group">
+                Batafsil o&apos;qish <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
             </motion.div>
           </AnimatePresence>
         </div>
