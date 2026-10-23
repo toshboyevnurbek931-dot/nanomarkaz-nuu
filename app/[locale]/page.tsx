@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { LabsSection } from "@/components/LabsSection";
+import { HeroBackground } from "@/components/HeroBackground"; // Yangi slayder ulandi
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import {
@@ -16,7 +17,6 @@ const FALLBACK_HERO_POSTER = "https://i.postimg.cc/QtxmK44y/nano-tech-bg.jpg";
 const FALLBACK_HERO_VIDEO = "https://cdn.pixabay.com/video/2020/09/14/49880-459196556_large.mp4";
 const IMG_SIZES = "(min-width:1280px) 24vw, (min-width:640px) 40vw, 92vw";
 
-// AI uslubidagi zamonaviy Sarlavha komponenti
 function SectionTitle({ icon, children }: { icon: ReactNode; children: ReactNode }) {
   return (
     <div className="mb-8 flex items-center gap-4">
@@ -35,37 +35,28 @@ export default async function HomePage({ params }: { params: { locale: string } 
   setRequestLocale(params.locale);
   const t = await getTranslations();
 
-  // Bazadan parallel ma'lumotlarni o'qib olish
   const [news, labs, settings] = await Promise.all([
     prisma.news.findMany({ where: { language: params.locale }, orderBy: { date: "desc" } }),
     prisma.lab.findMany({ orderBy: { nameEn: "asc" } }),
     prisma.siteSettings.findFirst(),
   ]);
 
-  // Admin paneldan kiritilgan media havolalari
   const heroVideo = settings?.heroVideoUrl || FALLBACK_HERO_VIDEO;
   const heroPoster = settings?.heroPosterUrl || FALLBACK_HERO_POSTER;
-
   const wrap = "mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8";
-  
-  // Interaktiv AI Karta Uslubi
   const aiCardStyle = "relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-lg shadow-slate-200/40 transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.015] hover:border-blue-400/50 hover:shadow-2xl hover:shadow-blue-500/15 hover:bg-white";
 
   return (
     <div className="min-h-screen bg-[#f8fafc] pb-24 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
       
-      {/* 1. HERO BO'LIMI */}
-      <section className="relative flex min-h-[88vh] w-full items-center justify-center overflow-hidden bg-slate-950">
-        <div className="absolute inset-0 z-0">
-          <video autoPlay loop muted playsInline key={heroVideo} poster={heroPoster} className="h-full w-full object-cover opacity-90 transition-opacity duration-1000">
-            <source src={heroVideo} type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/40 to-slate-900/10" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(37,99,235,0.3),transparent_50%)] mix-blend-screen" />
-        </div>
+      {/* 1. HERO BO'LIMI — ORQA FONDA DINAMIK SLAYDER BILAN */}
+      <section className="relative flex min-h-[92vh] w-full items-center justify-center overflow-hidden bg-slate-950">
+        
+        {/* Yangi orqa fon slayderi */}
+        <HeroBackground newsItems={news} defaultVideo={heroVideo} defaultPoster={heroPoster} />
 
-        <div className={`${wrap} relative z-10 grid items-center gap-10 py-16 lg:grid-cols-[1.35fr_1fr] lg:py-24`}>
+        {/* Kechagi yozuvlar va tartib o'zgarishsiz qoldi */}
+        <div className={`${wrap} relative z-10 grid items-center gap-10 py-16 pb-32 lg:grid-cols-[1.35fr_1fr] lg:py-24 lg:pb-36`}>
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/20 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-200 backdrop-blur-md shadow-lg">
               <Sparkles className="h-4 w-4 text-blue-400" /> Sun&apos;iy Intellekt va Kvant Muhiti
@@ -110,7 +101,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <div className="absolute bottom-0 left-0 w-full h-32 lg:h-48 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc]/90 to-transparent z-10 pointer-events-none" />
       </section>
 
-      {/* 2. YANGILIKLAR BO'LIMI - YORQIN VA MOSLASHTIRILGAN BLUR FON */}
+      {/* 2. YANGILIKLAR BO'LIMI */}
       <section id="news" className={`${wrap} scroll-mt-28 pt-8`}>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="lg:col-span-3">
@@ -119,29 +110,16 @@ export default async function HomePage({ params }: { params: { locale: string } 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
               {news.map((item) => (
                 <article key={item.id} className={`${aiCardStyle} group flex flex-col`}>
-                  
-                  {/* Yangilangan Rasm Konteyneri - Yorqin fon va chetda ochiq joylarsiz */}
                   <div className="relative h-56 w-full overflow-hidden bg-slate-50">
-                    
-                    {/* Orqa fon: Yorqinroq, biroz xiralashtirilgan (blur-md) va to'liq qoplovchi */}
                     <Image
                       src={item.imageUrl || FALLBACK_IMG}
-                      alt=""
-                      fill
-                      quality={20}
+                      alt="" fill quality={20}
                       className="object-cover blur-md opacity-60 scale-110 transition-transform duration-700 ease-out group-hover:scale-125"
                     />
-                    
-                    {/* Oqish qatlam (Overlay) - fonni postning oq rangiga mos qilib yumshatish uchun */}
                     <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px] transition-opacity duration-500 group-hover:opacity-20" />
-                    
-                    {/* Asosiy Rasm: Padding olib tashlandi, markazda aniq ko'rinadi va fonga singib ketadi */}
                     <Image
                       src={item.imageUrl || FALLBACK_IMG}
-                      alt={item.title}
-                      fill
-                      sizes={IMG_SIZES}
-                      quality={90}
+                      alt={item.title} fill sizes={IMG_SIZES} quality={90}
                       className="relative z-10 object-contain drop-shadow-md transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                   </div>
@@ -197,7 +175,6 @@ export default async function HomePage({ params }: { params: { locale: string } 
         </div>
       </section>
 
-      {/* QOLGAN BO'LIMLAR... */}
       {/* 3. KATEGORIYA VA LABORATORIYA GRIDLARI */}
       <div className={`${wrap} mt-16`}>
         <CategoryGrid />
@@ -211,22 +188,13 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <SectionTitle icon={<FlaskConical className="h-6 w-6" />}>Markaz rahbariyati</SectionTitle>
         <div className={`${aiCardStyle} flex flex-col items-center gap-8 p-6 sm:p-8 md:flex-row md:items-start group`}>
           <div className="relative h-64 w-52 shrink-0 overflow-hidden rounded-2xl border-2 border-white shadow-lg sm:h-72 sm:w-60 transition-transform duration-300 group-hover:scale-105">
-            <Image
-              src="https://i.postimg.cc/y6m4KnvP/HD-Uzbek-News-Broadcast-with-Elderly-Speaker.png"
-              alt="Akademik Komil Muqimovich Muqimov"
-              fill sizes="240px" quality={90}
-              className="object-cover object-top"
-            />
+            <Image src="https://i.postimg.cc/y6m4KnvP/HD-Uzbek-News-Broadcast-with-Elderly-Speaker.png" alt="Akademik" fill sizes="240px" quality={90} className="object-cover object-top" />
           </div>
           <div className="flex-1 space-y-4">
             <div>
-              <span className="inline-block rounded-full bg-blue-50 px-3 py-1 text-[11px] font-black uppercase tracking-wider text-blue-700 ring-1 ring-blue-200/60">
-                Markaz rahbari
-              </span>
+              <span className="inline-block rounded-full bg-blue-50 px-3 py-1 text-[11px] font-black uppercase tracking-wider text-blue-700 ring-1 ring-blue-200/60">Markaz rahbari</span>
               <h3 className="mt-3 text-2xl font-black text-slate-900 sm:text-3xl">Komil Muqimovich Muqimov</h3>
-              <p className="mt-1 text-xs font-bold text-blue-600 sm:text-sm">
-                Fizika-matematika fanlari doktori, professor, O&apos;zbekiston Fanlar akademiyasi akademigi
-              </p>
+              <p className="mt-1 text-xs font-bold text-blue-600 sm:text-sm">Fizika-matematika fanlari doktori, professor, O&apos;zbekiston Fanlar akademiyasi akademigi</p>
             </div>
             <div className="space-y-3 border-t border-slate-100 pt-4 text-xs font-medium leading-relaxed text-slate-600 sm:text-sm">
               <p><strong className="text-slate-900 font-extrabold">Faoliyati:</strong> O&apos;zbekiston Milliy universiteti qoshidagi Nanotexnologiyalarni rivojlantirish markazi rahbari. Magnetizm, optika, magnetooptika hamda nanomateriallar va spintronika sohalarida yirik ilmiy maktab yaratgan yetakchi olim.</p>
@@ -244,18 +212,12 @@ export default async function HomePage({ params }: { params: { locale: string } 
             const L = params.locale;
             const labName = L === "uz" ? lab.nameUz : L === "ru" ? lab.nameRu : lab.nameEn;
             const headName = (L === "uz" ? lab.headUz : L === "ru" ? lab.headRu : lab.headEn) || lab.head || "Laboratoriya mudiri";
-            const direction =
-              (L === "uz" ? lab.directionUz || lab.descriptionUz
-                : L === "ru" ? lab.directionRu || lab.descriptionRu
-                : lab.directionEn || lab.descriptionEn) || "Ilmiy-tadqiqot va amaliy ishlanmalar yo'nalishi";
+            const direction = (L === "uz" ? lab.directionUz || lab.descriptionUz : L === "ru" ? lab.directionRu || lab.descriptionRu : lab.directionEn || lab.descriptionEn) || "Ilmiy-tadqiqot va amaliy ishlanmalar yo'nalishi";
             const initials = headName.split(" ").filter(Boolean).slice(0, 2).map((w: string) => w[0].toUpperCase()).join(".");
-
             return (
               <div key={lab.id} className={`${aiCardStyle} p-5 group`}>
                 <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-sm font-black text-blue-700 shadow-inner transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:rotate-6">
-                    {initials || "L.R."}
-                  </div>
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-sm font-black text-blue-700 shadow-inner transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:rotate-6">{initials || "L.R."}</div>
                   <div>
                     <h3 className="text-base font-extrabold leading-snug text-slate-900">{headName}</h3>
                     <p className="mt-1 text-xs font-bold text-orange-600">{labName}</p>
@@ -283,14 +245,10 @@ export default async function HomePage({ params }: { params: { locale: string } 
               { i: <Clock className="h-5 w-5" />, h: "Ish tartibi", p: ["Dushanba – Shanba: 09:00 – 18:00", "Yakshanba: dam olish kuni"] },
             ].map((c) => (
               <div key={c.h} className={`${aiCardStyle} flex items-start gap-4 p-5 group`}>
-                <div className="rounded-xl bg-blue-50 p-3 text-blue-600 transition-transform duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white">
-                  {c.i}
-                </div>
+                <div className="rounded-xl bg-blue-50 p-3 text-blue-600 transition-transform duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white">{c.i}</div>
                 <div>
                   <h4 className="text-sm font-extrabold text-slate-900">{c.h}</h4>
-                  {c.p.map((line) => (
-                    <p key={line} className="mt-1 text-xs font-medium text-slate-600 leading-relaxed">{line}</p>
-                  ))}
+                  {c.p.map((line) => <p key={line} className="mt-1 text-xs font-medium text-slate-600 leading-relaxed">{line}</p>)}
                 </div>
               </div>
             ))}
@@ -300,13 +258,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
             <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10 blur-2xl animate-pulse" />
             <div className="relative z-10">
               <h3 className="text-xl font-black">Markaz axborot xizmati</h3>
-              <p className="mt-3 text-xs font-medium leading-relaxed text-blue-50">
-                Ilmiy hamkorlik, laboratoriya xizmatlari yoki tadqiqotlar bo&apos;yicha savollaringiz bo&apos;lsa, ko&apos;rsatilgan aloqa kanallari orqali markazimiz ma&apos;muriyati bilan bog&apos;lanishingiz mumkin.
-              </p>
+              <p className="mt-3 text-xs font-medium leading-relaxed text-blue-50">Ilmiy hamkorlik, laboratoriya xizmatlari yoki tadqiqotlar bo&apos;yicha savollaringiz bo&apos;lsa, ko&apos;rsatilgan aloqa kanallari orqali markazimiz ma&apos;muriyati bilan bog&apos;lanishingiz mumkin.</p>
             </div>
-            <p className="relative z-10 mt-6 border-t border-white/20 pt-4 text-[10px] font-black uppercase tracking-wider text-blue-100">
-              O&apos;zbekiston Milliy universiteti qoshidagi Nanotexnologiyalarni rivojlantirish markazi
-            </p>
+            <p className="relative z-10 mt-6 border-t border-white/20 pt-4 text-[10px] font-black uppercase tracking-wider text-blue-100">O&apos;zbekiston Milliy universiteti qoshidagi Nanotexnologiyalarni rivojlantirish markazi</p>
           </div>
         </div>
       </section>
@@ -317,9 +271,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
           <div className="absolute right-0 top-0 h-56 w-56 rounded-full bg-blue-50/50 blur-3xl transition-transform duration-700 group-hover:scale-150" />
           <div className="relative z-10">
             <div className="flex items-center gap-3">
-              <div className="rounded-xl bg-blue-100/60 p-2 text-blue-600">
-                <Layers className="h-7 w-7" />
-              </div>
+              <div className="rounded-xl bg-blue-100/60 p-2 text-blue-600"><Layers className="h-7 w-7" /></div>
               <h2 className="text-2xl font-black text-slate-900">{t("about.title")}</h2>
             </div>
             <div className="mt-4 h-1 w-20 rounded-full bg-gradient-to-r from-blue-600 to-indigo-500" />
